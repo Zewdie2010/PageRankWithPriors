@@ -5,6 +5,16 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>PageRank with Priors</name>
   
+  <dependencies>
+<dependency>
+	<groupId>gov.nist.math</groupId>
+	<artifactId>jama</artifactId>
+	<version>1.0.3</version>
+</dependency>
+
+
+	  
+  </dependencies>
   
   
   

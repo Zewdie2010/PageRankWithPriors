@@ -73,6 +73,7 @@ public class Graph {
 				}
 			}
 			reader.close();
+			System.out.println("********** Get the user name Over !");
 		} catch (Exception e) {
 			System.err.println("Read the list.txt wrong");
 		}
@@ -146,7 +147,8 @@ public class Graph {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(new File(this.graphFilename)));
 			String line = "";
-			LinkedList<LinkedList<String>> lineList = new LinkedList<LinkedList<String>>();
+			// LinkedList<LinkedList<String>> lineList = new
+			// Linke/dList<LinkedList<String>>();
 			int MaxId = 0;
 
 			// ******************* 1. find the max Id vertex
@@ -169,7 +171,7 @@ public class Graph {
 			System.out.println("************* Find the Max Id -> " + MaxId);
 
 			// ********************** 2. create the graph vertex
-			for (int i = 0; i < MaxId; i++) {
+			for (int i = 0; i <= MaxId; i++) {
 				this.vertexList.add(new Vertex());
 			}
 			System.out.println("************* Create the vertex over");
@@ -177,8 +179,8 @@ public class Graph {
 			// ********************** 3. create the graph edge
 			// also create the graph
 			// read the file again
-			reader = new BufferedReader(new FileReader(new File(this.graphFilename)));
-			while ((line = reader.readLine()) != null) {
+			BufferedReader reader2 = new BufferedReader(new FileReader(new File(this.graphFilename)));
+			while ((line = reader2.readLine()) != null) {
 
 				String[] tokens = line.split("\t");
 				if (tokens.length < 2 || tokens.length > 3)
@@ -196,11 +198,10 @@ public class Graph {
 				CreateEdge(idB, idA, weight);
 
 				this.amountEdge++;
-				System.out.println("******* The nums of the edge is " + this.amountEdge);
 			}
-			reader.close();
+			reader2.close();
 			this.amountVex = this.vertexList.size();
-			System.out.println("********** create the graph over");
+			System.out.println("*******************Create the edge over");
 
 			// *****4. get the transmission probability between the vertex
 			// P(idA->idB) = EdgeWeight(idA->idB)/idB.inWeight
@@ -210,7 +211,7 @@ public class Graph {
 					this.vertexList.get(entry.getKey()).redges.get(i).tranP = entry.getValue().tranP;
 				}
 			}
-
+			System.out.println("*********** Get the tranPosibility Over");
 			// ********5 . count the vertices and edges
 			for (int i = 0; i < this.amountVex; i++) {
 				this.Id_InWeight.put(i, this.vertexList.get(i).inweight);
@@ -218,6 +219,7 @@ public class Graph {
 				if (this.vertexList.get(i).edges.size() != 0)
 					this.totalWeight += this.vertexList.get(i).outweight;
 			}
+			System.out.println("************ Count the vertices and edges Over!");
 
 		} catch (Exception e) {
 			System.out.println("Network IO Exception");
@@ -335,11 +337,12 @@ public class Graph {
 		System.out.println("This is the Graph");
 		System.out.println("***************Test for the graph class ******************************");
 		try {
-			String graphfile = "F:/Data/All/Network.txt";
-			String NodeNameFile = "F:/Data/All/list.txt";
+			String graphfile = "/home/wanghao/Data/All/Network.txt";
+			String NodeNameFile = "/home/wanghao/Data/All/list.txt";
 			Graph g = new Graph(graphfile, NodeNameFile);
 
 			System.out.println("************Read Over*************");
+
 		} catch (Exception e) {
 			System.out.println("Graph class read file error!");
 		}

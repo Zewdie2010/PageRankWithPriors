@@ -81,6 +81,32 @@ public class Graph {
 	// remove the edge from A to B
 	public void RemoveEdge(int idA, int idB) {
 
+		if (!this.vertexList.get(idA).edges.containsKey(idB) || !this.vertexList.get(idB).redges.containsKey(idA))
+			System.err.println("This Edge from " + idA + "to" + idB + "does not exist");
+
+		if (this.vertexList.get(idB).edges.containsKey(idA) || this.vertexList.get(idA).redges.containsKey(idB))
+			System.err.println("This Edge from " + idB + "to" + idA + "does not exist");
+
+		double weight = this.vertexList.get(idA).edges.get(idB).weight;
+
+		// remove idA->idB edge
+		this.vertexList.get(idA).outdegree--;
+		this.vertexList.get(idA).outweight -= weight;
+		this.vertexList.get(idB).indegree--;
+		this.vertexList.get(idB).inweight -= weight;
+
+		this.vertexList.get(idA).edges.remove(idB);
+		this.vertexList.get(idB).redges.remove(idA);
+
+		// remove idB->idA edge
+		this.vertexList.get(idB).outdegree--;
+		this.vertexList.get(idB).outweight -= weight;
+		this.vertexList.get(idA).indegree--;
+		this.vertexList.get(idA).inweight -= weight;
+
+		this.vertexList.get(idB).edges.remove(idA);
+		this.vertexList.get(idA).redges.remove(idB);
+
 	}
 
 	// clone the graph
@@ -140,11 +166,13 @@ public class Graph {
 					MaxId = IdB;
 			}
 			reader.close();
+			System.out.println("************* Find the Max Id -> " + MaxId);
 
 			// ********************** 2. create the graph vertex
 			for (int i = 0; i < MaxId; i++) {
 				this.vertexList.add(new Vertex());
 			}
+			System.out.println("************* Create the vertex over");
 
 			// ********************** 3. create the graph edge
 			// also create the graph
@@ -168,10 +196,11 @@ public class Graph {
 				CreateEdge(idB, idA, weight);
 
 				this.amountEdge++;
-
+				System.out.println("******* The nums of the edge is " + this.amountEdge);
 			}
 			reader.close();
 			this.amountVex = this.vertexList.size();
+			System.out.println("********** create the graph over");
 
 			// *****4. get the transmission probability between the vertex
 			// P(idA->idB) = EdgeWeight(idA->idB)/idB.inWeight
@@ -304,5 +333,16 @@ public class Graph {
 
 	public static void main(String[] args) {
 		System.out.println("This is the Graph");
+		System.out.println("***************Test for the graph class ******************************");
+		try {
+			String graphfile = "F:/Data/All/Network.txt";
+			String NodeNameFile = "F:/Data/All/list.txt";
+			Graph g = new Graph(graphfile, NodeNameFile);
+
+			System.out.println("************Read Over*************");
+		} catch (Exception e) {
+			System.out.println("Graph class read file error!");
+		}
+
 	}
 }

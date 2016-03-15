@@ -6,4 +6,8 @@ public class BaseLine {
 
 	}
 
+	// PageRank
+
+	// Weighted PageRank
+
 }

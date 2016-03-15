@@ -138,7 +138,7 @@ public class Author {
 	}
 
 	// according to the level get the weight
-	public double GetSubSWeight(String domain, int level) {
+	public double GetSubsWeight(String domain, int level) {
 
 		if (level == 0)
 			return GetDomainWeight(domain);
